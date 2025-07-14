@@ -6,25 +6,33 @@ registries:
     username: github_dependabot_token
     password: ${{secrets.JFROG_GITHUB_DEPENDABOT_TOKEN}}
 updates:
-  - package-ecosystem: "gomod"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    pull-request-branch-name:
-      separator: "-"
-    groups:
-      gomod-dependencies:
-        patterns:
-          - "*"
-  - package-ecosystem: "docker"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    registries:
-      - jfrog
-    pull-request-branch-name:
-      separator: "-"
-    groups:
-      docker-dependencies:
-        patterns:
-          - "*"
+- package-ecosystem: gomod
+  directory: /
+  schedule:
+    interval: weekly
+  pull-request-branch-name:
+    separator: "-"
+  groups:
+    gomod-dependencies:
+      patterns:
+      - "*"
+  ignore:
+  - update-types:
+    - version-update:semver-major
+  - dependency-name: "*"
+- package-ecosystem: docker
+  directory: /
+  schedule:
+    interval: weekly
+  registries:
+  - jfrog
+  pull-request-branch-name:
+    separator: "-"
+  groups:
+    docker-dependencies:
+      patterns:
+      - "*"
+  ignore:
+  - update-types:
+    - version-update:semver-major
+  - dependency-name: "*"
